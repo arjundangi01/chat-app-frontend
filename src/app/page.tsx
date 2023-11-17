@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { onLoginAction, onSignupAction } from "@/redux/user/user.action";
 import { State } from "@/redux/store";
+import chatImg from './Images/chatapp.png'
 interface UserObj {
   userName: any;
   password: any;
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
 
   const onLogin = async() => {
     if (userRef.current?.value == '' || passwordRef.current?.value == '') {
+      // console.log('first')
       return
     }
     let userObj:UserObj = {
@@ -109,12 +111,14 @@ const Home: React.FC = () => {
             {error && <p className="text-red-400">! {error}</p>}
           </div>
           <div>
-            <img src="" alt="" />
+            {/* <img src="https://i.ibb.co/WVSdMkt/chatapp.png" alt="" /> */}
           </div>
         </div>
         <Image className="w-[100%]" src={wave} alt="" />
-        <div className="bg-[#74e9e1] text-center text-[#243b99] pb-[10rem] ">
-          <h1 className="text-6xl">Instant Chat</h1>
+        <div className="bg-[#74e9e1] text-center flex flex-col gap-y-[2rem] items-center text-[#243b99] pb-[2rem] ">
+          <h1 className="text-6xl my-[2rem]">Instant Chat</h1>
+          
+          <Image className="w-[70%] rounded-3xl " src={chatImg} alt="" />
         </div>
       </main>
     </>
