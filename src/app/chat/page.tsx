@@ -63,7 +63,7 @@ const Page = () => {
     getMessages();
   }, [currentConversation]);
   useEffect(() => {
-    socket.current = io("http://localhost:8080");
+    socket.current = io("https://chat-backend-production-5c50.up.railway.app")
     socket?.current.on("getMessage", (data:any) => {
       setArrivalMessage({
         sender: data.senderId,
