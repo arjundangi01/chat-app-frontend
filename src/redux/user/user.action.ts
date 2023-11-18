@@ -37,7 +37,7 @@ export const onLoginAction =
       dispatch({ type: USER_LOGIN_REQUEST_SUCCESS });
       Cookies.set("chat_token", data.token);
       // window.location.assign('/chat')
-      window.location.href = "/chat";
+      // window.location.href = "/chat";
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +63,7 @@ export const onSignupAction =
         Cookies.set("chat_token", response.data.token);
         // dispatch({ type: USER_LOGIN_REQUEST_SUCCESS });
 
-        window.location.href = "/chat";
+        // window.location.href = "/chat";
       }
     } catch (error) {
       console.log(error);
@@ -91,6 +91,6 @@ export const onSignupAction =
         type: ALL_USERS_SUCCESS,
         payload: response.data.allUser,
       });
-      console.log(response);
+      // console.log(response);
     } catch (error) {}
   };
