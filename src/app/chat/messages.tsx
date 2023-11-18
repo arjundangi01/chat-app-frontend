@@ -86,6 +86,8 @@ const Messages = ({
         text: inputRef.current?.value,
         senderImage: loginUserDetail.profileImage,
       };
+      setMessages( [...messages, newObj]);
+
       const receiverId = conversation.members.find(
         (member) => member !== loginUserId
       );
@@ -106,8 +108,7 @@ const Messages = ({
         newObj
       );
       // console.log(response)
-      getMessages();
-      // setMessages((prev) => [...prev, response.data]);
+      // getMessages();
     } catch (error) {
       console.log(error);
     }

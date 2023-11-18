@@ -31,13 +31,13 @@ export interface typeConversation {
 }
 
 export interface typeMessage {
-  _id:string,
+  _id?:string,
   conversationId: string;
   sender: string;
   senderImage: string;
   text: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 export interface typeMessageArray extends Array<typeMessage> {}
 export interface typeConversationArray extends Array<typeConversation> {}
