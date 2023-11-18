@@ -14,26 +14,32 @@ import {
 } from "@/redux/user/type";
 import axios from "axios";
 
-
 interface MessagesProps {
   messages: typeMessageArray;
   loginUserId: string;
   conversation: typeConversation;
-  setMessages: React.Dispatch<React.SetStateAction<typeMessageArray>>,
-  getMessages: () => void,
-  socket:any,
-  loginUserDetail:typeUserObj
+  setMessages: React.Dispatch<React.SetStateAction<typeMessageArray>>;
+  getMessages: () => void;
+  socket: any;
+  loginUserDetail: typeUserObj;
 }
 
-const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,socket,loginUserDetail }: MessagesProps) => {
+const Messages = ({
+  messages,
+  loginUserId,
+  conversation,
+  setMessages,
+  getMessages,
+  socket,
+  loginUserDetail,
+}: MessagesProps) => {
   const [user, setUser] = useState<typeUserObj>({
     _id: "",
     userName: "",
     profileImage: "",
   });
-  
 
-  const [newMessage, setNewMessage] = useState('')
+  const [newMessage, setNewMessage] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
 
@@ -48,7 +54,7 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
           `${process.env.NEXT_PUBLIC_BASE_URL}/users/single/${userId}`
         );
         // console.log(res.data.user);
-        
+        setUser(res.data.user);
       } catch (err) {
         console.log(err);
       }
@@ -65,12 +71,13 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
 
   const scrollToBottom = () => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
     }
   };
   const onMessageSend = async () => {
     if (!inputRef.current) {
-      return
+      return;
     }
     try {
       const newObj = {
@@ -78,12 +85,12 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
         sender: loginUserId,
         text: inputRef.current?.value,
         senderImage: loginUserDetail.profileImage,
-      }
+      };
       const receiverId = conversation.members.find(
         (member) => member !== loginUserId
       );
       socket?.current.emit("sendMessage", {
-        senderId: loginUserId,        
+        senderId: loginUserId,
         senderImage: loginUserDetail.profileImage,
         receiverId,
         text: inputRef.current?.value,
@@ -91,23 +98,20 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
 
       // setNewMessage('')
       if (inputRef.current) {
-        inputRef.current.value = '';
+        inputRef.current.value = "";
       }
 
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/messages`, newObj);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/messages`,
+        newObj
+      );
       // console.log(response)
-      getMessages()
-    // setMessages((prev) => [...prev, response.data]);
-
-    
-      
-      
+      getMessages();
+      // setMessages((prev) => [...prev, response.data]);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-
-  
+  };
 
   return (
     <main className="flex flex-col h-[100%] max-h-[100vh] ">
@@ -126,7 +130,10 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
           <PiDotsThreeOutlineVerticalLight />
         </div>
       </section>
-      <section className=" max-h-[100%] overflow-y-scroll  h-[100%] px-10 " ref={messageContainerRef}>
+      <section
+        className=" max-h-[100%] overflow-y-scroll  h-[100%] px-10 "
+        ref={messageContainerRef}
+      >
         {messages.map((ele, index) => (
           <>
             {loginUserId == ele.sender ? (
@@ -142,8 +149,8 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
         <input
           ref={inputRef}
           onKeyDown={(e) => {
-            if (e.key == 'Enter') {
-              onMessageSend()
+            if (e.key == "Enter") {
+              onMessageSend();
             }
           }}
           // value={newMessage}
@@ -153,7 +160,10 @@ const Messages = ({ messages, loginUserId, conversation,setMessages,getMessages,
           placeholder="Your message here..."
         />
         <IoMdAttach className="text-[1.5rem]" />
-        <IoSend className="text-[1.5rem] text-green-600 " onClick={onMessageSend} />
+        <IoSend
+          className="text-[1.5rem] text-green-600 "
+          onClick={onMessageSend}
+        />
       </section>
     </main>
   );

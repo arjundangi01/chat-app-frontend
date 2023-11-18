@@ -1,10 +1,11 @@
 "use client";
 
 import { loginAction, typeLoginUserReducer } from "../user/type";
-import { GET_LOGIN_USER_CONVERSATION_SUCCESS, GET_LOGIN_USER_DETAIL_SUCCESS } from "./login_user.action";
+import { GET_LOGIN_USER_CONVERSATION_SUCCESS, GET_LOGIN_USER_DETAIL, GET_LOGIN_USER_DETAIL_SUCCESS } from "./login_user.action";
 
 const initialState :typeLoginUserReducer = {
   error: "",
+  isLoading:false,
   loginUserDetail: {
     createdAt: "",
     updatedAt: "",
@@ -21,9 +22,11 @@ export const loginUserReducer = (
 ) => {
   switch (type) {
     case GET_LOGIN_USER_DETAIL_SUCCESS:
-      return { ...state, loginUserDetail: payload };
+      return { ...state, loginUserDetail: payload,isLoading:false };
     case GET_LOGIN_USER_CONVERSATION_SUCCESS:
-      return { ...state, loginUserConversation: payload };
+      return { ...state, loginUserConversation: payload,isLoading:false };
+    case GET_LOGIN_USER_DETAIL:
+      return { ...state, isLoading:true };
 
     default:
       return state;

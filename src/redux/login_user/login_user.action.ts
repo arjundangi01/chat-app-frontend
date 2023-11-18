@@ -2,7 +2,8 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import Cookies from "js-cookie";
 
-export const GET_LOGIN_USER_DETAIL_SUCCESS = "GET_LOGIN_USER_DETAIL";
+export const GET_LOGIN_USER_DETAIL_SUCCESS = "GET_LOGIN_USER_DETAIL_SUCCESS";
+export const GET_LOGIN_USER_DETAIL = "GET_LOGIN_USER_DETAIL";
 export const GET_LOGIN_USER_CONVERSATION_SUCCESS = "GET_LOGIN_USER_CONVERSATION_SUCCESS";
 
 export const getLoginUserDetail = () => async (dispatch: Dispatch) => {

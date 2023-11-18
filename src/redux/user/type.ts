@@ -5,6 +5,7 @@ export interface loginAction {
 }
 export interface typeLoginUserReducer {
   error: string;
+  isLoading: boolean;
   loginUserDetail: {
     createdAt: string;
     updatedAt: string;

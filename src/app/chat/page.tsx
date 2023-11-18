@@ -8,6 +8,7 @@ import { Conversation, UserCard } from "./usercard";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  GET_LOGIN_USER_DETAIL,
   getLoginUserConversation,
   getLoginUserDetail,
 } from "@/redux/login_user/login_user.action";
@@ -23,6 +24,7 @@ import {
 import axios from "axios";
 import NoChat from "./no_chat";
 import io from 'socket.io-client'
+import {Skeleton, UserSkeleton} from "../components/skeleton";
 // import {State} from "../../redux/store"
 
 
@@ -44,7 +46,7 @@ const Page = () => {
       members: [],
     });
 
-  const { loginUserDetail, loginUserConversation }: typeLoginUserReducer =
+  const { loginUserDetail, loginUserConversation,isLoading }: typeLoginUserReducer =
     useSelector((store: State) => store.loginUserReducer);
   // console.log(loginUserConversation)
   const { allUsers }: typeUserReducer = useSelector(
@@ -52,6 +54,7 @@ const Page = () => {
   );
 
   useEffect(() => {
+    dispatch({type:GET_LOGIN_USER_DETAIL})
     dispatch(getAllUsers('a') as any);
     dispatch(getLoginUserDetail() as any);
   }, []);
@@ -151,14 +154,14 @@ const Page = () => {
             <CiSettings className='text-[1.5rem]' />
           </div>
           <hr className="my-2" />
-          <div className="flex items-center gap-3 px-5">
+         { isLoading ? (<Skeleton/>) : <div className="flex items-center gap-3 px-5">
             <img
               className="max-w-[4rem] rounded-[50%]  border-2 "
               src={loginUserDetail?.profileImage}
               alt=""
             />
             <p>{loginUserDetail?.userName}</p>
-          </div>
+          </div>}
         </div>
         {/* ----------------------------- */}
         <div className="border max-h-[210px] min-h-[210px] overflow-y-scroll h-[210px] rounded-lg  mt-4 ">
@@ -206,15 +209,22 @@ const Page = () => {
 
           <div className="">
             {/* {map} */}
-            {loginUserConversation?.map((ele, index) => (
-              <Conversation
-                key={ele?._id}
-                conversation={ele}
-                loginUser={loginUserDetail}
-                onClick={createConversation}
-                isSelected={currentConversation._id === ele._id}
-              />
-            ))}
+            {
+              isLoading ? (<>
+              <UserSkeleton/>
+              <UserSkeleton/>
+              <UserSkeleton/>
+              </>) : (loginUserConversation?.map((ele, index) => (
+                <Conversation
+                  key={ele?._id}
+                  conversation={ele}
+                  loginUser={loginUserDetail}
+                  onClick={createConversation}
+                  isSelected={currentConversation._id === ele._id}
+                />
+              ))) 
+            }
+          
           </div>
         </div>
       </section>
