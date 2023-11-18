@@ -97,7 +97,8 @@ const Home: React.FC = () => {
               />
               <input
                 ref={passwordRef}
-                type="text"
+                type="password"
+
                 className="bg-transparent border-b-2 focus:outline-none"
                 placeholder="Enter password"
                 name="password"
