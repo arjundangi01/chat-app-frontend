@@ -19,8 +19,12 @@ interface UserObj {
   userName: string;
   password: string;
 }
+type SetIsLoadingFunction = React.Dispatch<React.SetStateAction<boolean>>;
+interface LoadingFunction{
+  setIsLoading: SetIsLoadingFunction;
+}
 export const onLoginAction =
-  (userObj: UserObj) => async (dispatch: Dispatch) => {
+  (userObj: UserObj,setIsLoading:SetIsLoadingFunction) => async (dispatch: Dispatch) => {
     try {
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/users/login`,
@@ -36,14 +40,16 @@ export const onLoginAction =
       }
       dispatch({ type: USER_LOGIN_REQUEST_SUCCESS });
       Cookies.set("chat_token", data.token);
+      setIsLoading(false);
       // window.location.assign('/chat')
       // window.location.href = "/chat";
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
 export const onSignupAction =
-  (userObj: UserObj) => async (dispatch: Dispatch) => {
+  (userObj: UserObj,setIsSignUpLoading:SetIsLoadingFunction) => async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/users/signup`,
@@ -61,11 +67,13 @@ export const onSignupAction =
           payload: response.data.message,
         });
         Cookies.set("chat_token", response.data.token);
+        setIsSignUpLoading(false);
         // dispatch({ type: USER_LOGIN_REQUEST_SUCCESS });
 
         // window.location.href = "/chat";
       }
     } catch (error) {
+      setIsSignUpLoading(false);
       console.log(error);
     }
   };

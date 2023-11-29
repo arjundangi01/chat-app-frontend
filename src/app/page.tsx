@@ -39,12 +39,12 @@ const Home: React.FC = () => {
       userName: userRef.current?.value,
       password: passwordRef.current?.value,
     };
-    await dispatch(onLoginAction(userObj) as any);
+    await dispatch(onLoginAction(userObj,setIsLoading) as any);
     if (userRef.current?.value && passwordRef.current?.value) {
       userRef.current.value = "";
       passwordRef.current.value = "";
     }
-    setIsLoading(false);
+    // setIsLoading(false);
     router.push("/chat", { scroll: false });
     // window.location.href = "/chat";
   };
@@ -58,12 +58,12 @@ const Home: React.FC = () => {
       userName: userRef.current?.value,
       password: passwordRef.current?.value,
     };
-    await dispatch(onSignupAction(userObj) as any);
+    await dispatch(onSignupAction(userObj,setIsSignUpLoading) as any);
     if (userRef.current?.value && passwordRef.current?.value) {
       userRef.current.value = "";
       passwordRef.current.value = "";
     }
-    setIsSignUpLoading(false);
+    // setIsSignUpLoading(false);
 
     router.push("/chat", { scroll: false });
   };
